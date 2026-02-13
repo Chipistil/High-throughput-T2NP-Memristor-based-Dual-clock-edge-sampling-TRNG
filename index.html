@@ -11,9 +11,13 @@
             background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); 
             min-height: 100vh; 
         }
+        /* 标题 30px */
         .custom-title { font-size: 30px; line-height: 1.2; }
+        /* 副标题 18px */
         .custom-subtitle { font-size: 18px; line-height: 1.6; }
+        /* Logo 高度 72px */
         .custom-logo { height: 72px; width: auto; }
+        
         .folder-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .folder-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1); }
         .file-item:hover { background-color: #f8fafc; }
@@ -21,10 +25,10 @@
         .collapsible-content.active { max-height: 800px; }
     </style>
 </head>
-<body class="py-12 px-4">
+<body class="pt-[36px] pb-12 px-4">
     <div class="max-w-5xl mx-auto">
         
-        <div class="bg-white rounded-3xl shadow-sm p-10 mb-[36px] border border-gray-100">
+        <div class="bg-white rounded-3xl shadow-sm p-10 mb-[30px] border border-gray-100">
             <h1 class="custom-title font-bold text-gray-800 flex items-center gap-4 mb-6 tracking-tight">
                 <span>🚀</span> Source Code and Comparative NIST Test Results
                 <div class="flex gap-3 ml-2">
@@ -65,7 +69,6 @@
                     <div class="bg-purple-50 p-3 rounded-xl text-3xl">🔐</div>
                     <h2 class="text-2xl font-bold text-gray-800">Dual-Image Encryption Verification Code</h2>
                 </div>
-                
                 <div class="space-y-4">
                     <div class="border border-dashed border-purple-200 rounded-lg overflow-hidden">
                         <div class="flex items-center justify-between p-4 bg-white">
@@ -77,15 +80,12 @@
                         </div>
                         <div id="folder1" class="collapsible-content bg-slate-50">
                             <ul class="p-4 space-y-3 border-t border-purple-100">
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 01_information_entropy.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/01_information_entropy.txt" target="_blank" class="text-purple-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 02_autocorrelation_function_analysis_ACF_analysis.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/02_autocorrelation_function_analysis_ACF_analysis.txt" target="_blank" class="text-purple-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 03_color_histogram_analysis.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/03_color_histogram_analysis.txt" target="_blank" class="text-purple-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 04_3D_pixel_distribution.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/04_3D_pixel_distribution.txt" target="_blank" class="text-purple-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 05_correlation_coefficient_analysis.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/05_correlation_coefficient_analysis.txt" target="_blank" class="text-purple-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 01_information_entropy.txt</span><a href="..." class="text-purple-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 02_autocorrelation_function_analysis_ACF_analysis.txt</span><a href="..." class="text-purple-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 03_color_histogram_analysis.txt</span><a href="..." class="text-purple-600 font-bold hover:underline">View File →</a></li>
                             </ul>
                         </div>
                     </div>
-
                     <div class="border border-dashed border-indigo-200 rounded-lg overflow-hidden">
                         <div class="flex items-center justify-between p-4 bg-white">
                             <div class="flex items-center gap-3">
@@ -96,13 +96,10 @@
                         </div>
                         <div id="folder2" class="collapsible-content bg-slate-50">
                             <ul class="p-4 space-y-3 border-t border-indigo-100">
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 01_mean_squared_error_MSE.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/02_Fidelity%20Analysis/01_mean_squared_error_MSE.txt" target="_blank" class="text-indigo-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 02_peak_signal_to_noise_ratio_PSNR.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/02_Fidelity%20Analysis/02_peak_signal_to_noise_ratio_PSNR.txt" target="_blank" class="text-indigo-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 03_structural_similarity_index_measure_SSIM.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/02_Fidelity%20Analysis/03_structural_similarity_index_measure_SSIM.txt" target="_blank" class="text-indigo-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 01_mean_squared_error_MSE.txt</span><a href="..." class="text-indigo-600 font-bold hover:underline">View File →</a></li>
                             </ul>
                         </div>
                     </div>
-
                     <div class="border border-dashed border-rose-200 rounded-lg overflow-hidden">
                         <div class="flex items-center justify-between p-4 bg-white">
                             <div class="flex items-center gap-3">
@@ -113,7 +110,7 @@
                         </div>
                         <div id="folder3" class="collapsible-content bg-slate-50">
                             <ul class="p-4 space-y-3 border-t border-rose-100">
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 salt_and_pepper_noise_SPN_attack.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/03_Robustness%20Testing/salt_and_pepper_noise_SPN_attack.txt" target="_blank" class="text-rose-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 salt_and_pepper_noise_SPN_attack.txt</span><a href="..." class="text-rose-600 font-bold hover:underline">View File →</a></li>
                             </ul>
                         </div>
                     </div>
@@ -132,10 +129,6 @@
                             <span class="text-lg text-gray-700 font-bold">Browse Full Dataset Folder</span>
                         </div>
                         <a href="Datasets/" target="_blank" class="bg-green-600 text-white px-5 py-2 rounded-md text-base font-bold hover:bg-green-700 transition">Open Directory</a>
-                    </li>
-                    <li class="flex items-center justify-between p-4 file-item rounded-lg transition">
-                        <span class="text-lg text-gray-700 font-medium">📈 experimental_results.xlsx</span>
-                        <a href="Datasets/experimental_results.xlsx" target="_blank" class="text-green-600 hover:underline text-base font-semibold">Download →</a>
                     </li>
                 </ul>
             </div>
