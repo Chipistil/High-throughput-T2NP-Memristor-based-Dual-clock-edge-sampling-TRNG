@@ -6,11 +6,7 @@
     <title>Source Code and Comparative NIST Test Results</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); 
-            min-height: 100vh; 
-        }
+        body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); min-height: 100vh; }
         .custom-title { font-size: 30px; line-height: 1.2; }
         .custom-subtitle { font-size: 18px; line-height: 1.6; }
         .custom-logo { height: 72px; width: auto; }
@@ -23,39 +19,27 @@
 </head>
 <body class="pt-[28px] pb-[30px] px-4">
     <div class="max-w-5xl mx-auto">
-        
         <div class="bg-white rounded-3xl shadow-sm p-10 mb-[28px] border border-gray-100">
             <h1 class="custom-title font-bold text-gray-800 flex items-center gap-4 mb-6 tracking-tight">
                 <span>🚀</span> Source Code and Comparative NIST Test Results
                 <div class="flex gap-3 ml-2">
-                    <img src="university.png" alt="University Logo" class="custom-logo">
-                    <img src="school.png" alt="School Logo" class="custom-logo">
+                    <img src="university.png" alt="University" class="custom-logo">
+                    <img src="school.png" alt="School" class="custom-logo">
                 </div>
             </h1>
-            <p class="custom-subtitle text-gray-600 leading-relaxed">
-                This repository hosts the source code and partial experimental datasets used in our study. The code includes the implementation of delay and relaxation time conversion, waveform-to-bitstream conversion, and verifications for dual-image encryption. The comparative NIST test results include NIST SP800-22 statistical test results of TRNGs under different parameters.
-            </p>
+            <p class="custom-subtitle text-gray-600">This repository hosts the source code and partial experimental datasets used in our study...</p>
         </div>
 
         <div class="grid gap-[28px]">
-            
             <div class="folder-card bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
                 <div class="flex items-center gap-4 mb-6 border-b pb-4">
                     <div class="bg-blue-50 p-3 rounded-xl text-3xl">📊</div>
-                    <h2 class="text-2xl font-bold text-gray-800">Data Conversion Code</h2>
+                    <h2 class="text-2xl font-bold text-gray-800">Data_Conversion_Code</h2>
                 </div>
                 <ul class="space-y-3">
-                    <li class="flex items-center justify-between p-3 file-item rounded-lg transition">
-                        <span class="text-lg text-gray-700 font-medium">📄 delay_time_conversion.txt</span>
-                        <a href="Data%20Conversion%20Code/delay_time_conversion.txt" target="_blank" class="text-blue-600 hover:underline text-base font-semibold">View File →</a>
-                    </li>
-                    <li class="flex items-center justify-between p-3 file-item rounded-lg transition">
-                        <span class="text-lg text-gray-700 font-medium">📄 relaxation_time_conversion.txt</span>
-                        <a href="Data%20Conversion%20Code/relaxation_time_conversion.txt" target="_blank" class="text-blue-600 hover:underline text-base font-semibold">View File →</a>
-                    </li>
-                    <li class="flex items-center justify-between p-3 file-item rounded-lg transition">
-                        <span class="text-lg text-gray-700 font-medium">📄 bitstream_conversion.txt</span>
-                        <a href="Data%20Conversion%20Code/bitstream_conversion.txt" target="_blank" class="text-blue-600 hover:underline text-base font-semibold">View File →</a>
+                    <li class="flex items-center justify-between p-3 file-item rounded-lg">
+                        <span class="text-lg text-gray-700">📄 delay_time_conversion.txt</span>
+                        <a href="Data_Conversion_Code/delay_time_conversion.txt" target="_blank" class="text-blue-600 hover:underline font-semibold">View File →</a>
                     </li>
                 </ul>
             </div>
@@ -63,54 +47,17 @@
             <div class="folder-card bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
                 <div class="flex items-center gap-4 mb-6 border-b pb-4">
                     <div class="bg-purple-50 p-3 rounded-xl text-3xl">🔐</div>
-                    <h2 class="text-2xl font-bold text-gray-800">Dual-Image Encryption Verification Code</h2>
+                    <h2 class="text-2xl font-bold text-gray-800">Dual_Image_Encryption_Verification_Code</h2>
                 </div>
                 <div class="space-y-4">
                     <div class="border border-dashed border-purple-200 rounded-lg overflow-hidden">
                         <div class="flex items-center justify-between p-4 bg-white">
-                            <div class="flex items-center gap-3">
-                                <span class="text-2xl">📁</span>
-                                <span class="text-lg text-gray-700 font-bold">01_Statistical Analysis</span>
-                            </div>
-                            <button onclick="toggleFolder('folder2_1', this)" class="bg-purple-600 text-white px-5 py-2 rounded-md text-base font-bold hover:bg-purple-700 transition">Open Directory</button>
+                            <span class="text-lg text-gray-700 font-bold">📁 01_Statistical_Analysis</span>
+                            <button onclick="toggleFolder('f2_1', this)" class="bg-purple-600 text-white px-5 py-2 rounded-md font-bold">Open Directory</button>
                         </div>
-                        <div id="folder2_1" class="collapsible-content bg-slate-50">
+                        <div id="f2_1" class="collapsible-content bg-slate-50">
                             <ul class="p-4 space-y-3 border-t border-purple-100">
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 01_information_entropy.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/01_information_entropy.txt" target="_blank" class="text-purple-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 02_autocorrelation_function_analysis_ACF_analysis.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/02_autocorrelation_function_analysis_ACF_analysis.txt" target="_blank" class="text-purple-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 03_color_histogram_analysis.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/03_color_histogram_analysis.txt" target="_blank" class="text-purple-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 04_3D_pixel_distribution.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/04_3D_pixel_distribution.txt" target="_blank" class="text-purple-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 05_correlation_coefficient_analysis.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/05_correlation_coefficient_analysis.txt" target="_blank" class="text-purple-600 font-bold hover:underline">View File →</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="border border-dashed border-indigo-200 rounded-lg overflow-hidden">
-                        <div class="flex items-center justify-between p-4 bg-white">
-                            <div class="flex items-center gap-3">
-                                <span class="text-2xl">📁</span>
-                                <span class="text-lg text-gray-700 font-bold">02_Fidelity Analysis</span>
-                            </div>
-                            <button onclick="toggleFolder('folder2_2', this)" class="bg-indigo-600 text-white px-5 py-2 rounded-md text-base font-bold hover:bg-indigo-700 transition">Open Directory</button>
-                        </div>
-                        <div id="folder2_2" class="collapsible-content bg-slate-50">
-                            <ul class="p-4 space-y-3 border-t border-indigo-100">
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 01_mean_squared_error_MSE.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/02_Fidelity%20Analysis/01_mean_squared_error_MSE.txt" target="_blank" class="text-indigo-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 02_peak_signal_to_noise_ratio_PSNR.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/02_Fidelity%20Analysis/02_peak_signal_to_noise_ratio_PSNR.txt" target="_blank" class="text-indigo-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 03_structural_similarity_index_measure_SSIM.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/02_Fidelity%20Analysis/03_structural_similarity_index_measure_SSIM.txt" target="_blank" class="text-indigo-600 font-bold hover:underline">View File →</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="border border-dashed border-rose-200 rounded-lg overflow-hidden">
-                        <div class="flex items-center justify-between p-4 bg-white">
-                            <div class="flex items-center gap-3">
-                                <span class="text-2xl">📁</span>
-                                <span class="text-lg text-gray-700 font-bold">03_Robustness Testing</span>
-                            </div>
-                            <button onclick="toggleFolder('folder2_3', this)" class="bg-rose-600 text-white px-5 py-2 rounded-md text-base font-bold hover:bg-rose-700 transition">Open Directory</button>
-                        </div>
-                        <div id="folder2_3" class="collapsible-content bg-slate-50">
-                            <ul class="p-4 space-y-3 border-t border-rose-100">
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-600">📄 salt_and_pepper_noise_SPN_attack.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/03_Robustness%20Testing/salt_and_pepper_noise_SPN_attack.txt" target="_blank" class="text-rose-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between"><span class="text-gray-600">📄 01_information_entropy.txt</span><a href="Dual_Image_Encryption/01_Statistical_Analysis/01_information_entropy.txt" target="_blank" class="text-purple-600 font-bold hover:underline">View File →</a></li>
                             </ul>
                         </div>
                     </div>
@@ -120,88 +67,31 @@
             <div class="folder-card bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
                 <div class="flex items-center gap-4 mb-6 border-b pb-4">
                     <div class="bg-orange-50 p-3 rounded-xl text-3xl">📄</div>
-                    <h2 class="text-2xl font-bold text-gray-800">Comparative NIST Test Results</h2>
+                    <h2 class="text-2xl font-bold text-gray-800">Comparative_NIST_Test_Results</h2>
                 </div>
                 <div class="space-y-4">
-                    
                     <div class="border border-dashed border-orange-200 rounded-lg overflow-hidden">
                         <div class="flex items-center justify-between p-4 bg-white">
-                            <div class="flex items-center gap-3">
-                                <span class="text-2xl">📁</span>
-                                <span class="text-lg text-gray-700 font-bold">01_Test Bit Streams, Square Wave and Circuit Comparison</span>
-                            </div>
-                            <button onclick="toggleFolder('nist1', this)" class="bg-orange-600 text-white px-5 py-2 rounded-md text-base font-bold hover:bg-orange-700 transition">Open Directory</button>
+                            <span class="text-lg text-gray-700 font-bold">📁 01_Test_Bit_Streams_Square_Wave_and_Circuit_Comparison</span>
+                            <button onclick="toggleFolder('f3_1', this)" class="bg-orange-600 text-white px-5 py-2 rounded-md font-bold">Open Directory</button>
                         </div>
-                        <div id="nist1" class="collapsible-content bg-slate-50">
+                        <div id="f3_1" class="collapsible-content bg-slate-50">
                             <ul class="p-4 space-y-3 border-t border-orange-100">
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-700">📄 01_150, 000_bits.txt</span><a href="Comparative%20NIST%20Test%20Results/01_Test%20Bit%20Streams/01_150,000_bits.txt" target="_blank" class="text-orange-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-700">📄 02_1, 500, 000_bits.txt</span><a href="Comparative%20NIST%20Test%20Results/01_Test%20Bit%20Streams/02_1,500,000_bits.txt" target="_blank" class="text-orange-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-700">📄 03_square_wave_voltage.txt</span><a href="Comparative%20NIST%20Test%20Results/01_Test%20Bit%20Streams/03_square_wave_voltage.txt" target="_blank" class="text-orange-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-700">📄 04_single-input_Fibonacci_NFSR_dual-sampling_circuit.txt</span><a href="Comparative%20NIST%20Test%20Results/01_Test%20Bit%20Streams/04_single-input_Fibonacci_NFSR_dual-sampling_circuit.txt" target="_blank" class="text-orange-600 font-bold hover:underline">View File →</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="border border-dashed border-emerald-200 rounded-lg overflow-hidden">
-                        <div class="flex items-center justify-between p-4 bg-white">
-                            <div class="flex items-center gap-3">
-                                <span class="text-2xl">📁</span>
-                                <span class="text-lg text-gray-700 font-bold">02_High/Low Input Amplitude Pulses Comparison</span>
-                            </div>
-                            <button onclick="toggleFolder('nist2', this)" class="bg-emerald-600 text-white px-5 py-2 rounded-md text-base font-bold hover:bg-emerald-700 transition">Open Directory</button>
-                        </div>
-                        <div id="nist2" class="collapsible-content bg-slate-50">
-                            <ul class="p-4 space-y-3 border-t border-emerald-100">
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 01_2.8V.txt</span><a href="Comparative%20NIST%20Test%20Results/02_High_Low_Input_Amplitude/01_2.8V.txt" target="_blank" class="text-emerald-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 02_2.9V.txt</span><a href="Comparative%20NIST%20Test%20Results/02_High_Low_Input_Amplitude/02_2.9V.txt" target="_blank" class="text-emerald-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 03_3.0V.txt</span><a href="Comparative%20NIST%20Test%20Results/02_High_Low_Input_Amplitude/03_3.0V.txt" target="_blank" class="text-emerald-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 04_3.1V.txt</span><a href="Comparative%20NIST%20Test%20Results/02_High_Low_Input_Amplitude/04_3.1V.txt" target="_blank" class="text-emerald-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 05_3.2V.txt</span><a href="Comparative%20NIST%20Test%20Results/02_High_Low_Input_Amplitude/05_3.2V.txt" target="_blank" class="text-emerald-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 06_3.5V.txt</span><a href="Comparative%20NIST%20Test%20Results/02_High_Low_Input_Amplitude/06_3.5V.txt" target="_blank" class="text-emerald-600 font-bold hover:underline">View File →</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="border border-dashed border-blue-200 rounded-lg overflow-hidden">
-                        <div class="flex items-center justify-between p-4 bg-white">
-                            <div class="flex items-center gap-3">
-                                <span class="text-2xl">📁</span>
-                                <span class="text-lg text-gray-700 font-bold">03_high/Low clock frequency Comparison</span>
-                            </div>
-                            <button onclick="toggleFolder('nist3', this)" class="bg-blue-600 text-white px-5 py-2 rounded-md text-base font-bold hover:bg-blue-700 transition">Open Directory</button>
-                        </div>
-                        <div id="nist3" class="collapsible-content bg-slate-50">
-                            <ul class="p-4 space-y-3 border-t border-blue-100">
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 01_1.5MHz.txt</span><a href="Comparative%20NIST%20Test%20Results/03_High_Low_Clock/01_1.5MHz.txt" target="_blank" class="text-blue-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 02_1.75MHz.txt</span><a href="Comparative%20NIST%20Test%20Results/03_High_Low_Clock/02_1.75MHz.txt" target="_blank" class="text-blue-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 03_2.0MHz.txt</span><a href="Comparative%20NIST%20Test%20Results/03_High_Low_Clock/03_2.0MHz.txt" target="_blank" class="text-blue-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 04_2.1MHz.txt</span><a href="Comparative%20NIST%20Test%20Results/03_High_Low_Clock/04_2.1MHz.txt" target="_blank" class="text-blue-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 05_2.2MHz.txt</span><a href="Comparative%20NIST%20Test%20Results/03_High_Low_Clock/05_2.2MHz.txt" target="_blank" class="text-blue-600 font-bold hover:underline">View File →</a></li>
-                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 06_2.5MHz.txt</span><a href="Comparative%20NIST%20Test%20Results/03_High_Low_Clock/06_2.5MHz.txt" target="_blank" class="text-blue-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between"><span class="text-gray-700">📄 04_single_input_Fibonacci_NFSR_dual_sampling_circuit.txt</span><a href="NIST_Results/01_Test_Bit_Streams/04_single_input_Fibonacci_NFSR_dual_sampling_circuit.txt" target="_blank" class="text-orange-600 font-bold hover:underline">View File →</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
-
-        <div class="mt-[30px] text-center text-gray-400 text-sm italic">
-            <p>© 2026 Powered by GitHub Pages · Final Polished Layout</p>
-        </div>
+        <div class="mt-[30px] text-center text-gray-400 text-sm italic">© 2026 Powered by GitHub Pages</div>
     </div>
-
     <script>
         function toggleFolder(id, btn) {
             const content = document.getElementById(id);
             const isActive = content.classList.contains('active');
-            if (isActive) {
-                content.classList.remove('active');
-                btn.innerText = "Open Directory";
-            } else {
-                content.classList.add('active');
-                btn.innerText = "Close Directory";
-            }
+            content.classList.toggle('active');
+            btn.innerText = isActive ? "Open Directory" : "Close Directory";
         }
     </script>
 </body>
