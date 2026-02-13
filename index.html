@@ -18,6 +18,9 @@
             transform: translateY(-4px); 
             box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
         }
+        .file-item:hover {
+            background-color: #f8fafc;
+        }
     </style>
 </head>
 <body class="py-12 px-4">
@@ -34,23 +37,23 @@
             </p>
         </div>
 
-        <div class="grid md:grid-cols-1 gap-6">
+        <div class="grid gap-8">
             
             <div class="folder-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
                 <div class="flex items-center gap-4 mb-4 border-b pb-4">
                     <div class="bg-blue-50 p-3 rounded-xl text-2xl">📊</div>
                     <h2 class="text-xl font-bold text-gray-800">Data Conversion Code</h2>
                 </div>
-                <ul class="space-y-3">
-                    <li class="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition">
+                <ul class="space-y-2">
+                    <li class="flex items-center justify-between p-3 file-item rounded-lg transition">
                         <span class="text-gray-700 font-medium">📄 delay_time_conversion.txt</span>
                         <a href="Data%20Conversion%20Code/delay_time_conversion.txt" target="_blank" class="text-blue-600 hover:underline text-sm font-semibold">View File →</a>
                     </li>
-                    <li class="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition">
+                    <li class="flex items-center justify-between p-3 file-item rounded-lg transition">
                         <span class="text-gray-700 font-medium">📄 relaxation_time_conversion.txt</span>
                         <a href="Data%20Conversion%20Code/relaxation_time_conversion.txt" target="_blank" class="text-blue-600 hover:underline text-sm font-semibold">View File →</a>
                     </li>
-                    <li class="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition">
+                    <li class="flex items-center justify-between p-3 file-item rounded-lg transition">
                         <span class="text-gray-700 font-medium">📄 bitstream_conversion.txt</span>
                         <a href="Data%20Conversion%20Code/bitstream_conversion.txt" target="_blank" class="text-blue-600 hover:underline text-sm font-semibold">View File →</a>
                     </li>
@@ -58,20 +61,72 @@
             </div>
 
             <div class="folder-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
-                <div class="flex items-center gap-4 mb-4 border-b pb-4">
+                <div class="flex items-center gap-4 mb-6 border-b pb-4">
                     <div class="bg-purple-50 p-3 rounded-xl text-2xl">🔐</div>
                     <h2 class="text-xl font-bold text-gray-800">Dual-Image Encryption Verification Code</h2>
                 </div>
-                <ul class="space-y-3">
-                    <li class="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition">
-                        <span class="text-gray-700 font-medium">📄 encryption_verify.txt</span>
-                        <a href="Dual-Image%20Encryption%20Verification%20Code/encryption_verify.txt" target="_blank" class="text-blue-600 hover:underline text-sm font-semibold">View File →</a>
-                    </li>
-                    <li class="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition">
-                        <span class="text-gray-700 font-medium">📄 image_decryption.txt</span>
-                        <a href="Dual-Image%20Encryption%20Verification%20Code/image_decryption.txt" target="_blank" class="text-blue-600 hover:underline text-sm font-semibold">View File →</a>
-                    </li>
-                </ul>
+                
+                <div class="space-y-8 ml-4">
+                    <div>
+                        <h3 class="text-md font-bold text-purple-700 mb-3 flex items-center gap-2">
+                            <span>📁</span> 01_Statistical Analysis
+                        </h3>
+                        <ul class="space-y-1 border-l-2 border-purple-100 ml-2 pl-4">
+                            <li class="flex items-center justify-between p-2 file-item rounded-md transition">
+                                <span class="text-gray-600 text-sm">📄 01_information_entropy.txt</span>
+                                <a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/01_information_entropy.txt" target="_blank" class="text-purple-600 hover:underline text-xs font-bold">View</a>
+                            </li>
+                            <li class="flex items-center justify-between p-2 file-item rounded-md transition">
+                                <span class="text-gray-600 text-sm">📄 02_autocorrelation_function_analysis_ACF_analysis.txt</span>
+                                <a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/02_autocorrelation_function_analysis_ACF_analysis.txt" target="_blank" class="text-purple-600 hover:underline text-xs font-bold">View</a>
+                            </li>
+                            <li class="flex items-center justify-between p-2 file-item rounded-md transition">
+                                <span class="text-gray-600 text-sm">📄 03_color_histogram_analysis.txt</span>
+                                <a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/03_color_histogram_analysis.txt" target="_blank" class="text-purple-600 hover:underline text-xs font-bold">View</a>
+                            </li>
+                            <li class="flex items-center justify-between p-2 file-item rounded-md transition">
+                                <span class="text-gray-600 text-sm">📄 04_3D_pixel_distribution.txt</span>
+                                <a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/04_3D_pixel_distribution.txt" target="_blank" class="text-purple-600 hover:underline text-xs font-bold">View</a>
+                            </li>
+                            <li class="flex items-center justify-between p-2 file-item rounded-md transition">
+                                <span class="text-gray-600 text-sm">📄 05_correlation_coefficient_analysis.txt</span>
+                                <a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/05_correlation_coefficient_analysis.txt" target="_blank" class="text-purple-600 hover:underline text-xs font-bold">View</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-md font-bold text-indigo-700 mb-3 flex items-center gap-2">
+                            <span>📁</span> 02_Fidelity Analysis
+                        </h3>
+                        <ul class="space-y-1 border-l-2 border-indigo-100 ml-2 pl-4">
+                            <li class="flex items-center justify-between p-2 file-item rounded-md transition">
+                                <span class="text-gray-600 text-sm">📄 01_mean_squared_error_MSE.txt</span>
+                                <a href="Dual-Image%20Encryption%20Verification%20Code/02_Fidelity%20Analysis/01_mean_squared_error_MSE.txt" target="_blank" class="text-indigo-600 hover:underline text-xs font-bold">View</a>
+                            </li>
+                            <li class="flex items-center justify-between p-2 file-item rounded-md transition">
+                                <span class="text-gray-600 text-sm">📄 02_peak_signal_to_noise_ratio_PSNR.txt</span>
+                                <a href="Dual-Image%20Encryption%20Verification%20Code/02_Fidelity%20Analysis/02_peak_signal_to_noise_ratio_PSNR.txt" target="_blank" class="text-indigo-600 hover:underline text-xs font-bold">View</a>
+                            </li>
+                            <li class="flex items-center justify-between p-2 file-item rounded-md transition">
+                                <span class="text-gray-600 text-sm">📄 03_structural_similarity_index_measure_SSIM.txt</span>
+                                <a href="Dual-Image%20Encryption%20Verification%20Code/02_Fidelity%20Analysis/03_structural_similarity_index_measure_SSIM.txt" target="_blank" class="text-indigo-600 hover:underline text-xs font-bold">View</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-md font-bold text-rose-700 mb-3 flex items-center gap-2">
+                            <span>📁</span> 03_Robustness Testing
+                        </h3>
+                        <ul class="space-y-1 border-l-2 border-rose-100 ml-2 pl-4">
+                            <li class="flex items-center justify-between p-2 file-item rounded-md transition">
+                                <span class="text-gray-600 text-sm">📄 salt_and_pepper_noise_SPN_attack.txt</span>
+                                <a href="Dual-Image%20Encryption%20Verification%20Code/03_Robustness%20Testing/salt_and_pepper_noise_SPN_attack.txt" target="_blank" class="text-rose-600 hover:underline text-xs font-bold">View</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
             <div class="folder-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
@@ -80,11 +135,11 @@
                     <h2 class="text-xl font-bold text-gray-800">Datasets</h2>
                 </div>
                 <ul class="space-y-3">
-                    <li class="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition border border-dashed border-gray-200">
+                    <li class="flex items-center justify-between p-3 file-item rounded-lg transition border border-dashed border-gray-200">
                         <span class="text-gray-700 font-medium">📁 Browse Full Dataset Folder</span>
                         <a href="Datasets/" target="_blank" class="bg-green-600 text-white px-3 py-1 rounded text-xs font-bold hover:bg-green-700">Open Directory</a>
                     </li>
-                    <li class="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition">
+                    <li class="flex items-center justify-between p-3 file-item rounded-lg transition">
                         <span class="text-gray-700 font-medium">📈 experimental_results.xlsx</span>
                         <a href="Datasets/experimental_results.xlsx" class="text-green-600 hover:underline text-sm font-semibold">Download →</a>
                     </li>
