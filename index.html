@@ -21,6 +21,15 @@
         .file-item:hover {
             background-color: #f8fafc;
         }
+        /* Dropdown Animation */
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+        .collapsible-content.active {
+            max-height: 600px; 
+        }
     </style>
 </head>
 <body class="py-12 px-4">
@@ -33,7 +42,7 @@
                 <img src="school.png" alt="School Logo" class="h-14 w-auto ml-2">
             </h1>
             <p class="text-lg text-gray-600 leading-relaxed">
-                This repository hosts the source code and partial experimental datasets used in our study. The code includes the implementation of delay and relaxation time conversion, waveform-to-bitstream conversion, and verifications for dual-image encryption. The datasets include NIST test results of TRNGs under different parameters. 
+                This repository hosts the source code and partial experimental datasets used in our study. The code includes the implementation of delay and relaxation time conversion, waveform-to-bitstream conversion, and verifications for dual-image encryption.
             </p>
         </div>
 
@@ -67,28 +76,55 @@
                 </div>
                 
                 <div class="space-y-4">
-                    <div class="flex items-center justify-between p-3 file-item rounded-lg transition border border-dashed border-purple-200">
-                        <div class="flex items-center gap-3">
-                            <span class="text-xl">📁</span>
-                            <span class="text-gray-700 font-bold">01_Statistical Analysis</span>
+                    <div class="border border-dashed border-purple-200 rounded-lg overflow-hidden">
+                        <div class="flex items-center justify-between p-3 bg-white">
+                            <div class="flex items-center gap-3">
+                                <span class="text-xl">📁</span>
+                                <span class="text-gray-700 font-bold">01_Statistical Analysis</span>
+                            </div>
+                            <button onclick="toggleFolder('stat_folder', this)" class="bg-purple-600 text-white px-4 py-1.5 rounded-md text-sm font-bold hover:bg-purple-700 transition">Open Directory</button>
                         </div>
-                        <a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/" target="_blank" class="bg-purple-600 text-white px-4 py-1.5 rounded-md text-sm font-bold hover:bg-purple-700 transition">Open Directory</a>
+                        <div id="stat_folder" class="collapsible-content bg-slate-50">
+                            <ul class="p-4 space-y-2 border-t border-purple-100">
+                                <li class="flex items-center justify-between text-sm"><span class="text-gray-600">📄 01_information_entropy.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/01_information_entropy.txt" class="text-purple-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-sm"><span class="text-gray-600">📄 02_autocorrelation_function_analysis_ACF_analysis.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/02_autocorrelation_function_analysis_ACF_analysis.txt" class="text-purple-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-sm"><span class="text-gray-600">📄 03_color_histogram_analysis.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/03_color_histogram_analysis.txt" class="text-purple-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-sm"><span class="text-gray-600">📄 04_3D_pixel_distribution.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/04_3D_pixel_distribution.txt" class="text-purple-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-sm"><span class="text-gray-600">📄 05_correlation_coefficient_analysis.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/01_Statistical%20Analysis/05_correlation_coefficient_analysis.txt" class="text-purple-600 font-bold hover:underline">View File →</a></li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <div class="flex items-center justify-between p-3 file-item rounded-lg transition border border-dashed border-indigo-200">
-                        <div class="flex items-center gap-3">
-                            <span class="text-xl">📁</span>
-                            <span class="text-gray-700 font-bold">02_Fidelity Analysis</span>
+                    <div class="border border-dashed border-indigo-200 rounded-lg overflow-hidden">
+                        <div class="flex items-center justify-between p-3 bg-white">
+                            <div class="flex items-center gap-3">
+                                <span class="text-xl">📁</span>
+                                <span class="text-gray-700 font-bold">02_Fidelity Analysis</span>
+                            </div>
+                            <button onclick="toggleFolder('fidelity_folder', this)" class="bg-indigo-600 text-white px-4 py-1.5 rounded-md text-sm font-bold hover:bg-indigo-700 transition">Open Directory</button>
                         </div>
-                        <a href="Dual-Image%20Encryption%20Verification%20Code/02_Fidelity%20Analysis/" target="_blank" class="bg-indigo-600 text-white px-4 py-1.5 rounded-md text-sm font-bold hover:bg-indigo-700 transition">Open Directory</a>
+                        <div id="fidelity_folder" class="collapsible-content bg-slate-50">
+                            <ul class="p-4 space-y-2 border-t border-indigo-100">
+                                <li class="flex items-center justify-between text-sm"><span class="text-gray-600">📄 01_mean_squared_error_MSE.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/02_Fidelity%20Analysis/01_mean_squared_error_MSE.txt" class="text-indigo-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-sm"><span class="text-gray-600">📄 02_peak_signal_to_noise_ratio_PSNR.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/02_Fidelity%20Analysis/02_peak_signal_to_noise_ratio_PSNR.txt" class="text-indigo-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-sm"><span class="text-gray-600">📄 03_structural_similarity_index_measure_SSIM.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/02_Fidelity%20Analysis/03_structural_similarity_index_measure_SSIM.txt" class="text-indigo-600 font-bold hover:underline">View File →</a></li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <div class="flex items-center justify-between p-3 file-item rounded-lg transition border border-dashed border-rose-200">
-                        <div class="flex items-center gap-3">
-                            <span class="text-xl">📁</span>
-                            <span class="text-gray-700 font-bold">03_Robustness Testing</span>
+                    <div class="border border-dashed border-rose-200 rounded-lg overflow-hidden">
+                        <div class="flex items-center justify-between p-3 bg-white">
+                            <div class="flex items-center gap-3">
+                                <span class="text-xl">📁</span>
+                                <span class="text-gray-700 font-bold">03_Robustness Testing</span>
+                            </div>
+                            <button onclick="toggleFolder('robust_folder', this)" class="bg-rose-600 text-white px-4 py-1.5 rounded-md text-sm font-bold hover:bg-rose-700 transition">Open Directory</button>
                         </div>
-                        <a href="Dual-Image%20Encryption%20Verification%20Code/03_Robustness%20Testing/" target="_blank" class="bg-rose-600 text-white px-4 py-1.5 rounded-md text-sm font-bold hover:bg-rose-700 transition">Open Directory</a>
+                        <div id="robust_folder" class="collapsible-content bg-slate-50">
+                            <ul class="p-4 space-y-2 border-t border-rose-100">
+                                <li class="flex items-center justify-between text-sm"><span class="text-gray-600">📄 salt_and_pepper_noise_SPN_attack.txt</span><a href="Dual-Image%20Encryption%20Verification%20Code/03_Robustness%20Testing/salt_and_pepper_noise_SPN_attack.txt" class="text-rose-600 font-bold hover:underline">View File →</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -112,12 +148,26 @@
                     </li>
                 </ul>
             </div>
-
         </div>
 
         <div class="mt-12 text-center text-gray-400 text-sm italic">
-            <p>© 2026 Powered by GitHub Pages · Arial Font Applied</p>
+            <p>© 2026 Powered by GitHub Pages · Interactive Folders Enabled</p>
         </div>
     </div>
+
+    <script>
+        function toggleFolder(id, btn) {
+            const content = document.getElementById(id);
+            const isActive = content.classList.contains('active');
+            
+            if (isActive) {
+                content.classList.remove('active');
+                btn.innerText = "Open Directory";
+            } else {
+                content.classList.add('active');
+                btn.innerText = "Close Directory";
+            }
+        }
+    </script>
 </body>
 </html>
