@@ -11,10 +11,15 @@
             background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); 
             min-height: 100vh; 
         }
-        /* 精确控制标题字号为 26px */
+        /* 标题精确控制为 28px */
         .custom-title {
-            font-size: 26px;
+            font-size: 28px;
             line-height: 1.2;
+        }
+        /* 副标题精确控制为 17px */
+        .custom-subtitle {
+            font-size: 17px;
+            line-height: 1.6;
         }
         .folder-card { 
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -45,7 +50,7 @@
                 <img src="university.png" alt="University Logo" class="h-14 w-auto ml-2">
                 <img src="school.png" alt="School Logo" class="h-14 w-auto ml-2">
             </h1>
-            <p class="text-base text-gray-600 leading-relaxed">
+            <p class="custom-subtitle text-gray-600 leading-relaxed">
                 This repository hosts the source code and partial experimental datasets used in our study. The code includes the implementation of delay and relaxation time conversion, waveform-to-bitstream conversion, and verifications for dual-image encryption. The datasets include NIST SP800-22 statistical test results of TRNGs under different parameters.
             </p>
         </div>
@@ -155,7 +160,7 @@
         </div>
 
         <div class="mt-12 text-center text-gray-400 text-sm italic">
-            <p>© 2026 Powered by GitHub Pages · Academic Layout Optimization</p>
+            <p>© 2026 Powered by GitHub Pages · Final Academic Tuning</p>
         </div>
     </div>
 
