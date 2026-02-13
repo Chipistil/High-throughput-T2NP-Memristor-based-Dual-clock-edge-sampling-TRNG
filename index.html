@@ -6,68 +6,98 @@
     <title>Source Code and Partial Datasets</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* 将全局字体设置为 Arial */
         body { 
             font-family: Arial, sans-serif; 
             background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%); 
             min-height: 100vh; 
         }
-        .file-card:hover { 
-            transform: translateY(-2px); 
-            transition: all 0.3s; 
+        .folder-card { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .folder-card:hover { 
+            transform: translateY(-4px); 
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
-<body class="py-10 px-4">
-    <div class="max-w-3xl mx-auto">
-        <div class="bg-white rounded-2xl shadow-sm p-8 mb-6 border border-gray-100">
-            <h1 class="text-3xl font-bold text-gray-800 flex items-center gap-3">
+<body class="py-12 px-4">
+    <div class="max-w-4xl mx-auto">
+        
+        <div class="bg-white rounded-3xl shadow-sm p-10 mb-10 border border-gray-100">
+            <h1 class="text-3xl font-bold text-gray-800 flex items-center gap-3 mb-4">
                 <span>📂</span> Source Code and Partial Datasets
             </h1>
-            <p class="mt-2 text-gray-500">
+            <p class="text-lg text-gray-600 leading-relaxed">
                 This repository hosts the source code and partial experimental datasets used in our study. The code includes the implementation of delay and relaxation time extraction, waveform-to-random-bitstream conversion, and image verification for dual-image encryption.
             </p>
         </div>
 
-        <div class="grid gap-4">
+        <div class="grid md:grid-cols-1 gap-6">
             
-            <a href="test.txt" class="file-card bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md hover:border-blue-400 group">
-                <div class="flex items-center gap-4">
-                    <div class="bg-blue-50 p-3 rounded-lg text-2xl">📄</div>
+            <div class="folder-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                <div class="flex items-center gap-4 mb-4 border-b pb-4">
+                    <div class="bg-blue-50 p-3 rounded-xl text-2xl">⚙️</div>
                     <div>
-                        <h3 class="font-semibold text-gray-700 group-hover:text-blue-600">test.txt</h3>
-                        <p class="text-xs text-gray-400">View source code online</p>
+                        <h2 class="text-xl font-bold text-gray-800">Data Conversion Code</h2>
+                        <p class="text-sm text-gray-400">Scripts for time extraction and bitstream conversion</p>
                     </div>
                 </div>
-                <span class="text-blue-500 font-medium text-sm">View →</span>
-            </a>
+                <ul class="space-y-3">
+                    <li class="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition">
+                        <span class="text-gray-700 font-medium">📄 delay_extraction.txt</span>
+                        <a href="Data_Conversion_Code/delay_extraction.txt" class="text-blue-600 hover:underline text-sm font-semibold">View File →</a>
+                    </li>
+                    <li class="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition">
+                        <span class="text-gray-700 font-medium">📄 relaxation_time.txt</span>
+                        <a href="Data_Conversion_Code/relaxation_time.txt" class="text-blue-600 hover:underline text-sm font-semibold">View File →</a>
+                    </li>
+                </ul>
+            </div>
 
-            <a href="data.xlsx" class="file-card bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md hover:border-green-400 group">
-                <div class="flex items-center gap-4">
-                    <div class="bg-green-50 p-3 rounded-lg text-2xl">📊</div>
+            <div class="folder-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                <div class="flex items-center gap-4 mb-4 border-b pb-4">
+                    <div class="bg-purple-50 p-3 rounded-xl text-2xl">🔐</div>
                     <div>
-                        <h3 class="font-semibold text-gray-700 group-hover:text-green-600">data.xlsx</h3>
-                        <p class="text-xs text-gray-400">Experimental dataset (Excel)</p>
+                        <h2 class="text-xl font-bold text-gray-800">Dual-Image Encryption Verification Code</h2>
+                        <p class="text-sm text-gray-400">Security validation and image protocols</p>
                     </div>
                 </div>
-                <span class="text-green-500 font-medium text-sm">Download →</span>
-            </a>
+                <ul class="space-y-3">
+                    <li class="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition">
+                        <span class="text-gray-700 font-medium">📄 encryption_verify.txt</span>
+                        <a href="Dual-Image_Encryption_Verification_Code/encryption_verify.txt" class="text-blue-600 hover:underline text-sm font-semibold">View File →</a>
+                    </li>
+                    <li class="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition">
+                        <span class="text-gray-700 font-medium">📄 image_decryption.txt</span>
+                        <a href="Dual-Image_Encryption_Verification_Code/image_decryption.txt" class="text-blue-600 hover:underline text-sm font-semibold">View File →</a>
+                    </li>
+                </ul>
+            </div>
 
-            <a href="my_folder/list.txt" class="file-card bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md hover:border-purple-400 group">
-                <div class="flex items-center gap-4">
-                    <div class="bg-purple-50 p-3 rounded-lg text-2xl">📁</div>
+            <div class="folder-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                <div class="flex items-center gap-4 mb-4 border-b pb-4">
+                    <div class="bg-green-50 p-3 rounded-xl text-2xl">📊</div>
                     <div>
-                        <h3 class="font-semibold text-gray-700 group-hover:text-purple-600">Project Folder</h3>
-                        <p class="text-xs text-gray-400">Additional scripts and resources</p>
+                        <h2 class="text-xl font-bold text-gray-800">Datasets</h2>
+                        <p class="text-sm text-gray-400">Selected experimental data for verification</p>
                     </div>
                 </div>
-                <span class="text-purple-500 font-medium text-sm">Enter →</span>
-            </a>
+                <ul class="space-y-3">
+                    <li class="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition border border-dashed border-gray-200">
+                        <span class="text-gray-700 font-medium">📁 Browse Full Dataset Folder</span>
+                        <a href="Datasets/" class="bg-green-600 text-white px-3 py-1 rounded text-xs font-bold hover:bg-green-700">Open Directory</a>
+                    </li>
+                    <li class="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition">
+                        <span class="text-gray-700 font-medium">📈 experimental_results.xlsx</span>
+                        <a href="Datasets/experimental_results.xlsx" class="text-green-600 hover:underline text-sm font-semibold">Download →</a>
+                    </li>
+                </ul>
+            </div>
 
         </div>
 
-        <div class="mt-8 text-center text-gray-400 text-sm">
-            <p>© 2026 Powered by GitHub Pages · Auto-updated</p>
+        <div class="mt-12 text-center text-gray-400 text-sm italic">
+            <p>© 2026 Powered by GitHub Pages · Arial Font Applied</p>
         </div>
     </div>
 </body>
