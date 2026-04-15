@@ -1,0 +1,510 @@
+import numpy as np
+from PIL import Image
+import matplotlib.pyplot as plt
+import pandas as pd
+import os
+from pathlib import Path
+import random
+from datetime import datetime
+from scipy.stats import pearsonr
+
+# Path settings
+image_dir = r"G:\Users\Chipistil\Desktop\High-throughput-T2NP-Memristor-based-Dual-clock-edge-sampling-TRNG"
+original_path = os.path.join(image_dir, "AHU Black Swan.png")
+decrypted_path = os.path.join(image_dir, "AHU Black Swan_decrypted_image.png")
+encrypted_path = os.path.join(image_dir, "AHU Black Swan_encrypted_image.png")
+output_dir = r"G:\Users\Chipistil\Desktop\High-throughput-T2NP-Memristor-based-Dual-clock-edge-sampling-TRNG\Dual-Image Encryption Verification Code\01_Statistical Analysis\04_correlation_coefficient_analysis"
+output_image_path = os.path.join(output_dir, "correlation_analysis.png")
+output_excel_path = os.path.join(output_dir, "correlation_data.xlsx")
+output_txt_path = os.path.join(output_dir, "calculation_process.txt")
+
+plt.rcParams['font.sans-serif'] = ['SimHei']
+plt.rcParams['axes.unicode_minus'] = False
+
+def calculate_pixel_correlation(image_path, num_pairs=8000):
+    if not Path(image_path).exists():
+        print(f"Error: File {image_path} does not exist")
+        return None
+    
+    try:
+        img = Image.open(image_path)
+        img_array = np.array(img)
+        
+        height, width, channels = img_array.shape
+        print(f"Image size: {width}x{height}")
+        print(f"Number of channels: {channels}")
+        
+        if img_array.max() <= 1.0:
+            img_array = (img_array * 255).astype(np.uint8)
+        else:
+            img_array = img_array.astype(np.uint8)
+        
+        correlation_data = {
+            'horizontal': {'r': [], 'g': [], 'b': []},
+            'vertical': {'r': [], 'g': [], 'b': []},
+            'diagonal': {'r': [], 'g': [], 'b': []}
+        }
+        
+        max_horizontal_pairs = (height) * (width - 1)
+        max_vertical_pairs = (height - 1) * (width)
+        max_diagonal_pairs = (height - 1) * (width - 1)
+        
+        pairs_per_type = min(num_pairs // 3, max_horizontal_pairs, max_vertical_pairs, max_diagonal_pairs)
+        
+        print(f"Selecting {pairs_per_type} pixel pairs for each direction for analysis")
+        
+        horizontal_pairs = []
+        for _ in range(pairs_per_type):
+            i = random.randint(0, height - 1)
+            j = random.randint(0, width - 2)
+            horizontal_pairs.append((i, j, i, j+1))
+        
+        vertical_pairs = []
+        for _ in range(pairs_per_type):
+            i = random.randint(0, height - 2)
+            j = random.randint(0, width - 1)
+            vertical_pairs.append((i, j, i+1, j))
+        
+        diagonal_pairs = []
+        for _ in range(pairs_per_type):
+            i = random.randint(0, height - 2)
+            j = random.randint(0, width - 2)
+            diagonal_pairs.append((i, j, i+1, j+1))
+        
+        for direction, pairs in [('horizontal', horizontal_pairs), 
+                               ('vertical', vertical_pairs), 
+                               ('diagonal', diagonal_pairs)]:
+            
+            r_values1, r_values2 = [], []
+            g_values1, g_values2 = [], []
+            b_values1, b_values2 = [], []
+            
+            for i1, j1, i2, j2 in pairs:
+                r1, g1, b1 = img_array[i1, j1]
+                r2, g2, b2 = img_array[i2, j2]
+                
+                r_values1.append(r1)
+                r_values2.append(r2)
+                g_values1.append(g1)
+                g_values2.append(g2)
+                b_values1.append(b1)
+                b_values2.append(b2)
+            
+            correlation_data[direction]['r'] = (r_values1, r_values2)
+            correlation_data[direction]['g'] = (g_values1, g_values2)
+            correlation_data[direction]['b'] = (b_values1, b_values2)
+        
+        return correlation_data
+        
+    except Exception as e:
+        print(f"Error processing image: {e}")
+        return None
+
+def calculate_pearson_correlation(x, y):
+    if len(x) == 0 or len(y) == 0:
+        return 0
+    return pearsonr(x, y)[0]
+
+def generate_correlation_figure(original_data, decrypted_data, encrypted_data, output_image_path):
+    fig, axes = plt.subplots(3, 3, figsize=(18, 18))
+    
+    directions = ['horizontal', 'vertical', 'diagonal']
+    direction_names = ['Horizontal', 'Vertical', 'Diagonal']
+    colors = {'r': 'red', 'g': 'green', 'b': 'blue'}
+    channel_names = {'r': 'Red', 'g': 'Green', 'b': 'Blue'}
+    
+    title_fontsize = 14
+    subtitle_fontsize = 12
+    
+    for i, direction in enumerate(directions):
+        ax = axes[0, i]
+        
+        for channel in ['r', 'g', 'b']:
+            x, y = original_data[direction][channel]
+            ax.scatter(x, y, alpha=0.5, s=10, color=colors[channel], label=f'{channel_names[channel]} Channel')
+        
+        corr_text = []
+        for channel in ['r', 'g', 'b']:
+            x, y = original_data[direction][channel]
+            corr = calculate_pearson_correlation(x, y)
+            corr_text.append(f'{channel_names[channel]}: {corr:.4f}')
+        
+        ax.set_title(f'Original Image - {direction_names[i]} Direction', fontsize=title_fontsize)
+        ax.set_xlabel('First Pixel Value', fontsize=subtitle_fontsize)
+        ax.set_ylabel('Second Pixel Value', fontsize=subtitle_fontsize)
+        ax.grid(True, linestyle='--', alpha=0.7)
+        ax.legend(loc='best')
+        
+        text_str = '\n'.join(corr_text)
+        ax.text(0.05, 0.95, text_str, transform=ax.transAxes, fontsize=subtitle_fontsize,
+                verticalalignment='top', bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+    
+    for i, direction in enumerate(directions):
+        ax = axes[1, i]
+        
+        for channel in ['r', 'g', 'b']:
+            x, y = encrypted_data[direction][channel]
+            ax.scatter(x, y, alpha=0.5, s=10, color=colors[channel], label=f'{channel_names[channel]} Channel')
+        
+        corr_text = []
+        for channel in ['r', 'g', 'b']:
+            x, y = encrypted_data[direction][channel]
+            corr = calculate_pearson_correlation(x, y)
+            corr_text.append(f'{channel_names[channel]}: {corr:.4f}')
+        
+        ax.set_title(f'Encrypted Image - {direction_names[i]} Direction', fontsize=title_fontsize)
+        ax.set_xlabel('First Pixel Value', fontsize=subtitle_fontsize)
+        ax.set_ylabel('Second Pixel Value', fontsize=subtitle_fontsize)
+        ax.grid(True, linestyle='--', alpha=0.7)
+        ax.legend(loc='best')
+        
+        text_str = '\n'.join(corr_text)
+        ax.text(0.05, 0.95, text_str, transform=ax.transAxes, fontsize=subtitle_fontsize,
+                verticalalignment='top', bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+    
+    for i, direction in enumerate(directions):
+        ax = axes[2, i]
+        
+        for channel in ['r', 'g', 'b']:
+            x, y = decrypted_data[direction][channel]
+            ax.scatter(x, y, alpha=0.5, s=10, color=colors[channel], label=f'{channel_names[channel]} Channel')
+        
+        corr_text = []
+        for channel in ['r', 'g', 'b']:
+            x, y = decrypted_data[direction][channel]
+            corr = calculate_pearson_correlation(x, y)
+            corr_text.append(f'{channel_names[channel]}: {corr:.4f}')
+        
+        ax.set_title(f'Decrypted Image - {direction_names[i]} Direction', fontsize=title_fontsize)
+        ax.set_xlabel('First Pixel Value', fontsize=subtitle_fontsize)
+        ax.set_ylabel('Second Pixel Value', fontsize=subtitle_fontsize)
+        ax.grid(True, linestyle='--', alpha=0.7)
+        ax.legend(loc='best')
+        
+        text_str = '\n'.join(corr_text)
+        ax.text(0.05, 0.95, text_str, transform=ax.transAxes, fontsize=subtitle_fontsize,
+                verticalalignment='top', bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+    
+    plt.tight_layout()
+    
+    plt.savefig(output_image_path, dpi=300, bbox_inches='tight')
+    print(f"Correlation analysis image saved to: {output_image_path}")
+    
+    plt.close()
+
+def generate_channel_correlation_figures(original_data, decrypted_data, encrypted_data, output_dir):
+    directions = ['horizontal', 'vertical', 'diagonal']
+    direction_names = ['Horizontal', 'Vertical', 'Diagonal']
+    colors = {'r': 'red', 'g': 'green', 'b': 'blue'}
+    channel_names = {'r': 'Red', 'g': 'Green', 'b': 'Blue'}
+    
+    title_fontsize = 14
+    subtitle_fontsize = 12
+    
+    for channel in ['r', 'g', 'b']:
+        fig, axes = plt.subplots(3, 3, figsize=(18, 18))
+        
+        channel_title = f'{channel_names[channel]} Channel Correlation Analysis'
+        fig.suptitle(channel_title, fontsize=16, y=0.98)
+        
+        for i, direction in enumerate(directions):
+            ax = axes[0, i]
+            
+            x, y = original_data[direction][channel]
+            ax.scatter(x, y, alpha=0.5, s=10, color=colors[channel])
+            
+            corr = calculate_pearson_correlation(x, y)
+            corr_text = f'{channel_names[channel]}: {corr:.4f}'
+            
+            ax.set_title(f'Original Image - {direction_names[i]} Direction', fontsize=title_fontsize)
+            ax.set_xlabel('First Pixel Value', fontsize=subtitle_fontsize)
+            ax.set_ylabel('Second Pixel Value', fontsize=subtitle_fontsize)
+            ax.grid(True, linestyle='--', alpha=0.7)
+            
+            ax.text(0.05, 0.95, corr_text, transform=ax.transAxes, fontsize=subtitle_fontsize,
+                    verticalalignment='top', bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+        
+        for i, direction in enumerate(directions):
+            ax = axes[1, i]
+            
+            x, y = encrypted_data[direction][channel]
+            ax.scatter(x, y, alpha=0.5, s=10, color=colors[channel])
+            
+            corr = calculate_pearson_correlation(x, y)
+            corr_text = f'{channel_names[channel]}: {corr:.4f}'
+            
+            ax.set_title(f'Encrypted Image - {direction_names[i]} Direction', fontsize=title_fontsize)
+            ax.set_xlabel('First Pixel Value', fontsize=subtitle_fontsize)
+            ax.set_ylabel('Second Pixel Value', fontsize=subtitle_fontsize)
+            ax.grid(True, linestyle='--', alpha=0.7)
+            
+            ax.text(0.05, 0.95, corr_text, transform=ax.transAxes, fontsize=subtitle_fontsize,
+                    verticalalignment='top', bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+        
+        for i, direction in enumerate(directions):
+            ax = axes[2, i]
+            
+            x, y = decrypted_data[direction][channel]
+            ax.scatter(x, y, alpha=0.5, s=10, color=colors[channel])
+            
+            corr = calculate_pearson_correlation(x, y)
+            corr_text = f'{channel_names[channel]}: {corr:.4f}'
+            
+            ax.set_title(f'Decrypted Image - {direction_names[i]} Direction', fontsize=title_fontsize)
+            ax.set_xlabel('First Pixel Value', fontsize=subtitle_fontsize)
+            ax.set_ylabel('Second Pixel Value', fontsize=subtitle_fontsize)
+            ax.grid(True, linestyle='--', alpha=0.7)
+            
+            ax.text(0.05, 0.95, corr_text, transform=ax.transAxes, fontsize=subtitle_fontsize,
+                    verticalalignment='top', bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+        
+        plt.tight_layout(rect=[0, 0, 1, 0.97])
+        
+        output_image_path = os.path.join(output_dir, f"correlation_analysis_{channel}_channel.png")
+        plt.savefig(output_image_path, dpi=300, bbox_inches='tight')
+        print(f"{channel_names[channel]} channel correlation analysis image saved to: {output_image_path}")
+        
+        plt.close()
+
+def normalize_pixel_value(value):
+    return max(0, min(255, int(value)))
+
+def save_correlation_data_to_excel(original_data, decrypted_data, encrypted_data, output_excel_path):
+    output_dir = os.path.dirname(output_excel_path)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    directions = ['horizontal', 'vertical', 'diagonal']
+    direction_names = {'horizontal': 'Horizontal', 'vertical': 'Vertical', 'diagonal': 'Diagonal'}
+    channel_names = {'r': 'Red', 'g': 'Green', 'b': 'Blue'}
+    
+    with pd.ExcelWriter(output_excel_path, engine='openpyxl') as writer:
+        for direction in directions:
+            data_rows = []
+            
+            original_r1, original_r2 = original_data[direction]['r']
+            original_g1, original_g2 = original_data[direction]['g']
+            original_b1, original_b2 = original_data[direction]['b']
+            
+            decrypted_r1, decrypted_r2 = decrypted_data[direction]['r']
+            decrypted_g1, decrypted_g2 = decrypted_data[direction]['g']
+            decrypted_b1, decrypted_b2 = decrypted_data[direction]['b']
+            
+            encrypted_r1, encrypted_r2 = encrypted_data[direction]['r']
+            encrypted_g1, encrypted_g2 = encrypted_data[direction]['g']
+            encrypted_b1, encrypted_b2 = encrypted_data[direction]['b']
+            
+            min_length = min(len(original_r1), len(decrypted_r1), len(encrypted_r1))
+            
+            for i in range(min_length):
+                row = {
+                    'Index': i + 1,
+                    'Original_Red_Pixel1': normalize_pixel_value(original_r1[i]),
+                    'Original_Red_Pixel2': normalize_pixel_value(original_r2[i]),
+                    'Original_Green_Pixel1': normalize_pixel_value(original_g1[i]),
+                    'Original_Green_Pixel2': normalize_pixel_value(original_g2[i]),
+                    'Original_Blue_Pixel1': normalize_pixel_value(original_b1[i]),
+                    'Original_Blue_Pixel2': normalize_pixel_value(original_b2[i]),
+                    'Decrypted_Red_Pixel1': normalize_pixel_value(decrypted_r1[i]),
+                    'Decrypted_Red_Pixel2': normalize_pixel_value(decrypted_r2[i]),
+                    'Decrypted_Green_Pixel1': normalize_pixel_value(decrypted_g1[i]),
+                    'Decrypted_Green_Pixel2': normalize_pixel_value(decrypted_g2[i]),
+                    'Decrypted_Blue_Pixel1': normalize_pixel_value(decrypted_b1[i]),
+                    'Decrypted_Blue_Pixel2': normalize_pixel_value(decrypted_b2[i]),
+                    'Encrypted_Red_Pixel1': normalize_pixel_value(encrypted_r1[i]),
+                    'Encrypted_Red_Pixel2': normalize_pixel_value(encrypted_r2[i]),
+                    'Encrypted_Green_Pixel1': normalize_pixel_value(encrypted_g1[i]),
+                    'Encrypted_Green_Pixel2': normalize_pixel_value(encrypted_g2[i]),
+                    'Encrypted_Blue_Pixel1': normalize_pixel_value(encrypted_b1[i]),
+                    'Encrypted_Blue_Pixel2': normalize_pixel_value(encrypted_b2[i])
+                }
+                data_rows.append(row)
+            
+            df = pd.DataFrame(data_rows)
+            
+            correlation_results = []
+            for channel in ['r', 'g', 'b']:
+                original_corr = calculate_pearson_correlation(
+                    original_data[direction][channel][0],
+                    original_data[direction][channel][1]
+                )
+                decrypted_corr = calculate_pearson_correlation(
+                    decrypted_data[direction][channel][0],
+                    decrypted_data[direction][channel][1]
+                )
+                encrypted_corr = calculate_pearson_correlation(
+                    encrypted_data[direction][channel][0],
+                    encrypted_data[direction][channel][1]
+                )
+                
+                correlation_results.append({
+                    'Channel': channel_names[channel],
+                    'Original Image Correlation': original_corr,
+                    'Decrypted Image Correlation': decrypted_corr,
+                    'Encrypted Image Correlation': encrypted_corr
+                })
+            
+            corr_df = pd.DataFrame(correlation_results)
+            
+            sheet_name = f'{direction_names[direction]} Direction'
+            df.to_excel(writer, sheet_name=sheet_name, index=False, startrow=0)
+            
+            corr_df.to_excel(writer, sheet_name=sheet_name, index=False, startrow=len(df) + 3)
+        
+        summary_data = []
+        for direction in directions:
+            for channel in ['r', 'g', 'b']:
+                original_corr = calculate_pearson_correlation(
+                    original_data[direction][channel][0],
+                    original_data[direction][channel][1]
+                )
+                decrypted_corr = calculate_pearson_correlation(
+                    decrypted_data[direction][channel][0],
+                    decrypted_data[direction][channel][1]
+                )
+                encrypted_corr = calculate_pearson_correlation(
+                    encrypted_data[direction][channel][0],
+                    encrypted_data[direction][channel][1]
+                )
+                
+                summary_data.append({
+                    'Direction': direction_names[direction],
+                    'Channel': channel_names[channel],
+                    'Original Image Correlation': original_corr,
+                    'Decrypted Image Correlation': decrypted_corr,
+                    'Encrypted Image Correlation': encrypted_corr
+                })
+        
+        summary_df = pd.DataFrame(summary_data)
+        
+        summary_df.to_excel(writer, sheet_name='Correlation Summary', index=False)
+    
+    print(f"Correlation data saved to: {output_excel_path}")
+
+def save_calculation_process(original_path, decrypted_path, encrypted_path, original_data, decrypted_data, encrypted_data, output_txt_path):
+    output_dir = os.path.dirname(output_txt_path)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    directions = ['horizontal', 'vertical', 'diagonal']
+    direction_names = {'horizontal': 'Horizontal', 'vertical': 'Vertical', 'diagonal': 'Diagonal'}
+    channel_names = {'r': 'Red', 'g': 'Green', 'b': 'Blue'}
+    
+    with open(output_txt_path, 'w', encoding='utf-8') as f:
+        f.write("Image Pixel Correlation Analysis Calculation Process\n")
+        f.write("=" * 80 + "\n")
+        f.write(f"Analysis Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        f.write(f"Original Image Path: {original_path}\n")
+        f.write(f"Decrypted Image Path: {decrypted_path}\n")
+        f.write(f"Encrypted Image Path: {encrypted_path}\n")
+        f.write(f"Analysis Pixel Pairs: {len(original_data['horizontal']['r'][0])} pairs for each direction\n")
+        f.write("=" * 80 + "\n\n")
+        
+        for direction in directions:
+            f.write(f"{direction_names[direction]} Direction Correlation Analysis\n")
+            f.write("-" * 50 + "\n")
+            
+            for channel in ['r', 'g', 'b']:
+                f.write(f"{channel_names[channel]} Channel:\n")
+                
+                original_x, original_y = original_data[direction][channel]
+                original_corr = calculate_pearson_correlation(original_x, original_y)
+                
+                decrypted_x, decrypted_y = decrypted_data[direction][channel]
+                decrypted_corr = calculate_pearson_correlation(decrypted_x, decrypted_y)
+                
+                encrypted_x, encrypted_y = encrypted_data[direction][channel]
+                encrypted_corr = calculate_pearson_correlation(encrypted_x, encrypted_y)
+                
+                f.write(f"  Original Image Correlation: {original_corr:.6f}\n")
+                f.write(f"  Decrypted Image Correlation: {decrypted_corr:.6f}\n")
+                f.write(f"  Encrypted Image Correlation: {encrypted_corr:.6f}\n")
+                f.write(f"  Original→Encrypted Change: {encrypted_corr - original_corr:.6f}\n")
+                f.write(f"  Original→Decrypted Difference: {decrypted_corr - original_corr:.6f}\n\n")
+            
+        f.write("Correlation Coefficient Statistical Summary\n")
+        f.write("=" * 50 + "\n")
+        
+        all_original_corr = []
+        all_decrypted_corr = []
+        all_encrypted_corr = []
+        
+        for direction in directions:
+            for channel in ['r', 'g', 'b']:
+                original_corr = calculate_pearson_correlation(
+                    original_data[direction][channel][0],
+                    original_data[direction][channel][1]
+                )
+                decrypted_corr = calculate_pearson_correlation(
+                    decrypted_data[direction][channel][0],
+                    decrypted_data[direction][channel][1]
+                )
+                encrypted_corr = calculate_pearson_correlation(
+                    encrypted_data[direction][channel][0],
+                    encrypted_data[direction][channel][1]
+                )
+                all_original_corr.append(original_corr)
+                all_decrypted_corr.append(decrypted_corr)
+                all_encrypted_corr.append(encrypted_corr)
+        
+        avg_original_corr = np.mean(all_original_corr)
+        avg_decrypted_corr = np.mean(all_decrypted_corr)
+        avg_encrypted_corr = np.mean(all_encrypted_corr)
+        
+        f.write(f"Original Image Average Correlation: {avg_original_corr:.6f}\n")
+        f.write(f"Decrypted Image Average Correlation: {avg_decrypted_corr:.6f}\n")
+        f.write(f"Encrypted Image Average Correlation: {avg_encrypted_corr:.6f}\n")
+        f.write(f"Average Original→Encrypted Change: {avg_encrypted_corr - avg_original_corr:.6f}\n")
+        f.write(f"Average Original→Decrypted Difference: {avg_decrypted_corr - avg_original_corr:.6f}\n")
+        
+        f.write("\nPearson Correlation Coefficient Calculation Explanation\n")
+        f.write("-" * 50 + "\n")
+        f.write("Pearson correlation coefficient r formula:\n")
+        f.write("r = Σ[(X_i - X̄)(Y_i - Ȳ)] / sqrt(Σ(X_i - X̄)² × Σ(Y_i - Ȳ)²)\n")
+        f.write("Where:\n")
+        f.write("  X_i and Y_i are the values of two pixel pairs\n")
+        f.write("  X̄ and Ȳ are the means of the two pixel pairs\n")
+        f.write("  Σ represents the summation operation\n")
+        f.write("  sqrt represents the square root\n")
+    
+    print(f"Calculation process saved to: {output_txt_path}")
+
+def main():
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    print("Starting analysis of original image pixel correlation...")
+    original_data = calculate_pixel_correlation(original_path, num_pairs=30000)
+    if original_data is None:
+        print("Cannot process original image, program terminated")
+        return
+    
+    print("Starting analysis of decrypted image pixel correlation...")
+    decrypted_data = calculate_pixel_correlation(decrypted_path, num_pairs=30000)
+    if decrypted_data is None:
+        print("Cannot process decrypted image, program terminated")
+        return
+    
+    print("Starting analysis of encrypted image pixel correlation...")
+    encrypted_data = calculate_pixel_correlation(encrypted_path, num_pairs=30000)
+    if encrypted_data is None:
+        print("Cannot process encrypted image, program terminated")
+        return
+    
+    print("Generating correlation analysis image...")
+    generate_correlation_figure(original_data, decrypted_data, encrypted_data, output_image_path)
+    
+    print("Generating separate correlation analysis images for RGB channels...")
+    generate_channel_correlation_figures(original_data, decrypted_data, encrypted_data, output_dir)
+    
+    print("Saving correlation data to Excel file...")
+    save_correlation_data_to_excel(original_data, decrypted_data, encrypted_data, output_excel_path)
+    
+    print("Saving calculation process to text file...")
+    save_calculation_process(original_path, decrypted_path, encrypted_path, original_data, decrypted_data, encrypted_data, output_txt_path)
+    
+    print("\nAll analysis completed!")
+    print(f"Output files location: {output_dir}")
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,198 @@
+from pathlib import Path
+from datetime import datetime
+import matplotlib.pyplot as plt
+from matplotlib.image import imread
+import numpy as np
+import pandas as pd
+
+# Path settings
+original_image_path = r"G:\Users\Chipistil\Desktop\High-throughput-T2NP-Memristor-based-Dual-clock-edge-sampling-TRNG\AHU Black Swan.png"
+encrypted_image_path = r"G:\Users\Chipistil\Desktop\High-throughput-T2NP-Memristor-based-Dual-clock-edge-sampling-TRNG\AHU Black Swan_encrypted_image.png"
+save_directory = r"G:\Users\Chipistil\Desktop\High-throughput-T2NP-Memristor-based-Dual-clock-edge-sampling-TRNG\Dual-Image Encryption Verification Code\01_Statistical Analysis\02_color_histogram_analysis"
+
+plt.rcParams['font.sans-serif'] = ['SimHei']
+plt.rcParams['font.weight'] = 'bold'
+plt.rcParams['axes.unicode_minus'] = False
+
+def analyze_color_histogram(image_path, bins=256, show=True, save_path=None, save_data_path=None):
+    if not Path(image_path).exists():
+        print(f"Error: File {image_path} does not exist")
+        return None
+    
+    try:
+        image_rgb = imread(image_path)
+        
+        if image_rgb is None:
+            print(f"Error: Cannot read image {image_path}")
+            return None
+        
+        height, width, channels = image_rgb.shape
+        print(f"Image size: {width}x{height}")
+        print(f"Number of channels: {channels}")
+        
+        if image_rgb.max() <= 1.0:
+            image_rgb = (image_rgb * 255).astype(np.uint8)
+        else:
+            image_rgb = image_rgb.astype(np.uint8)
+        
+        r = image_rgb[:, :, 0]
+        g = image_rgb[:, :, 1]
+        b = image_rgb[:, :, 2]
+        
+        hist_range = [0, 256]
+        hist_r, bin_edges = np.histogram(r.flatten(), bins=bins, range=hist_range)
+        hist_g, _ = np.histogram(g.flatten(), bins=bins, range=hist_range)
+        hist_b, _ = np.histogram(b.flatten(), bins=bins, range=hist_range)
+        
+        bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
+        
+        if save_data_path:
+            data = {
+                'Pixel Value Range': [f'{bin_edges[i]:.1f}-{bin_edges[i+1]:.1f}' for i in range(len(bin_edges)-1)],
+                'Pixel Value Center': bin_centers,
+                'Red Channel Pixel Frequency': hist_r,
+                'Green Channel Pixel Frequency': hist_g,
+                'Blue Channel Pixel Frequency': hist_b
+            }
+            df = pd.DataFrame(data)
+            df.to_excel(save_data_path, index=False)
+            print(f"Histogram data saved to: {save_data_path}")
+        
+        if save_path:
+            plt.figure(figsize=(15, 12))
+            
+            plt.subplot(3, 2, 1)
+            plt.imshow(image_rgb)
+            plt.title('Original Color Image')
+            plt.axis('off')
+            
+            plt.subplot(3, 2, 2)
+            plt.plot(hist_r, color='r', alpha=0.7, label='Red')
+            plt.plot(hist_g, color='g', alpha=0.7, label='Green')
+            plt.plot(hist_b, color='b', alpha=0.7, label='Blue')
+            plt.title(f'RGB Three-Channel Combined Histogram (bins={bins})')
+            plt.xlabel('Pixel Value')
+            plt.ylabel('Pixel Frequency')
+            plt.legend()
+            plt.grid(True, alpha=0.3)
+            
+            plt.subplot(3, 2, 3)
+            plt.plot(hist_r, color='r')
+            plt.title(f'Red Channel Histogram (bins={bins})')
+            plt.xlabel('Pixel Value')
+            plt.ylabel('Pixel Frequency')
+            plt.grid(True, alpha=0.3)
+            
+            plt.subplot(3, 2, 4)
+            plt.plot(hist_g, color='g')
+            plt.title(f'Green Channel Histogram (bins={bins})')
+            plt.xlabel('Pixel Value')
+            plt.ylabel('Pixel Frequency')
+            plt.grid(True, alpha=0.3)
+            
+            plt.subplot(3, 2, 5)
+            plt.plot(hist_b, color='b')
+            plt.title(f'Blue Channel Histogram (bins={bins})')
+            plt.xlabel('Pixel Value')
+            plt.ylabel('Pixel Frequency')
+            plt.grid(True, alpha=0.3)
+            
+            plt.tight_layout()
+            plt.savefig(save_path, dpi=300, bbox_inches='tight')
+            print(f"Histogram saved to: {save_path}")
+            plt.close()
+        
+        if show:
+            plt.figure(figsize=(15, 12))
+            
+            plt.subplot(3, 2, 1)
+            plt.imshow(image_rgb)
+            plt.title('Original Color Image')
+            plt.axis('off')
+            
+            plt.subplot(3, 2, 2)
+            plt.plot(hist_r, color='r', alpha=0.7, label='Red')
+            plt.plot(hist_g, color='g', alpha=0.7, label='Green')
+            plt.plot(hist_b, color='b', alpha=0.7, label='Blue')
+            plt.title(f'RGB Three-Channel Combined Histogram (bins={bins})')
+            plt.xlabel('Pixel Value')
+            plt.ylabel('Pixel Frequency')
+            plt.legend()
+            plt.grid(True, alpha=0.3)
+            
+            plt.subplot(3, 2, 3)
+            plt.plot(hist_r, color='r')
+            plt.title(f'Red Channel Histogram (bins={bins})')
+            plt.xlabel('Pixel Value')
+            plt.ylabel('Pixel Frequency')
+            plt.grid(True, alpha=0.3)
+            
+            plt.subplot(3, 2, 4)
+            plt.plot(hist_g, color='g')
+            plt.title(f'Green Channel Histogram (bins={bins})')
+            plt.xlabel('Pixel Value')
+            plt.ylabel('Pixel Frequency')
+            plt.grid(True, alpha=0.3)
+            
+            plt.subplot(3, 2, 5)
+            plt.plot(hist_b, color='b')
+            plt.title(f'Blue Channel Histogram (bins={bins})')
+            plt.xlabel('Pixel Value')
+            plt.ylabel('Pixel Frequency')
+            plt.grid(True, alpha=0.3)
+            
+            plt.tight_layout()
+            plt.show()
+        
+        return {
+            'red': hist_r,
+            'green': hist_g,
+            'blue': hist_b,
+            'bins': bins
+        }
+        
+    except Exception as e:
+        print(f"Error processing image: {e}")
+        return None
+
+def main():
+    import sys
+    global original_image_path, encrypted_image_path
+    
+    if len(sys.argv) > 2:
+        original_image_path = sys.argv[1]
+        encrypted_image_path = sys.argv[2]
+    else:
+        print(f"\nNo image path provided, using default path:")
+        print(f"Original image: {original_image_path}")
+        print(f"Encrypted image: {encrypted_image_path}")
+        print("Tip: You can specify image paths via command line arguments: 02_color_histogram_analysis.py [original_image_path] [encrypted_image_path]")
+    
+    print("Color Image Histogram Analysis Tool - 512*512 Image")
+    print("=" * 50)
+    
+    bins = 256
+    print(f"\nUsing {bins} bins for histogram analysis")
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    
+    print("\nAnalyzing original image...")
+    original_save_path = f"{save_directory}\\original_image_{bins}bins_{timestamp}.png"
+    original_save_data_path = f"{save_directory}\\original_image_{bins}bins_{timestamp}.xlsx"
+    original_result = analyze_color_histogram(original_image_path, bins=bins, save_path=original_save_path, save_data_path=original_save_data_path, show=False)
+    
+    print("\nAnalyzing encrypted image...")
+    encrypted_save_path = f"{save_directory}\\encrypted_image_{bins}bins_{timestamp}.png"
+    encrypted_save_data_path = f"{save_directory}\\encrypted_image_{bins}bins_{timestamp}.xlsx"
+    encrypted_result = analyze_color_histogram(encrypted_image_path, bins=bins, save_path=encrypted_save_path, save_data_path=encrypted_save_data_path, show=False)
+    
+    if original_result and encrypted_result:
+        print(f"\nAnalysis completed!")
+        print(f"Original image histogram saved to: {original_save_path}")
+        print(f"Original image histogram data saved to: {original_save_data_path}")
+        print(f"Encrypted image histogram saved to: {encrypted_save_path}")
+        print(f"Encrypted image histogram data saved to: {encrypted_save_data_path}")
+    else:
+        print("\nAnalysis failed, please check if image paths are correct")
+
+if __name__ == "__main__":
+    main()
