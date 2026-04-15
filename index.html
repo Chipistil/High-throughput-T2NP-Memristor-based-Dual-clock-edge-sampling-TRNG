@@ -143,11 +143,12 @@
                     <h2 class="text-2xl font-bold text-gray-800">Comparative NIST Test Results</h2>
                 </div>
                 <div class="space-y-4">
+                    
                     <div class="border border-dashed border-orange-200 rounded-lg overflow-hidden">
                         <div class="flex items-center justify-between p-4 bg-white">
                             <div class="flex items-center gap-3">
                                 <span class="text-2xl">📁</span>
-                                <span class="text-lg text-gray-700 font-bold">01_Test Bit Streams...</span>
+                                <span class="text-lg text-gray-700 font-bold">01_Test Bit Streams, Square Wave and Circuit Comparison</span>
                             </div>
                             <button onclick="toggleFolder('nist1', this)" class="bg-orange-600 text-white px-5 py-2 rounded-md text-base font-bold hover:bg-orange-700 transition">Open Directory</button>
                         </div>
@@ -160,7 +161,47 @@
                             </ul>
                         </div>
                     </div>
+
+                    <div class="border border-dashed border-emerald-200 rounded-lg overflow-hidden">
+                        <div class="flex items-center justify-between p-4 bg-white">
+                            <div class="flex items-center gap-3">
+                                <span class="text-2xl">📁</span>
+                                <span class="text-lg text-gray-700 font-bold">02_High/Low Input Amplitude Pulses Comparison</span>
+                            </div>
+                            <button onclick="toggleFolder('nist2', this)" class="bg-emerald-600 text-white px-5 py-2 rounded-md text-base font-bold hover:bg-emerald-700 transition">Open Directory</button>
+                        </div>
+                        <div id="nist2" class="collapsible-content bg-slate-50">
+                            <ul class="p-4 space-y-3 border-t border-emerald-100">
+                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 01_2.8V.txt</span><a href="Comparative%20NIST%20Test%20Results/02_High_Low_Input_Amplitude/01_2.8V.txt" target="_blank" class="text-emerald-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 02_2.9V.txt</span><a href="Comparative%20NIST%20Test%20Results/02_High_Low_Input_Amplitude/02_2.9V.txt" target="_blank" class="text-emerald-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 03_3.0V.txt</span><a href="Comparative%20NIST%20Test%20Results/02_High_Low_Input_Amplitude/03_3.0V.txt" target="_blank" class="text-emerald-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 04_3.1V.txt</span><a href="Comparative%20NIST%20Test%20Results/02_High_Low_Input_Amplitude/04_3.1V.txt" target="_blank" class="text-emerald-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 05_3.2V.txt</span><a href="Comparative%20NIST%20Test%20Results/02_High_Low_Input_Amplitude/05_3.2V.txt" target="_blank" class="text-emerald-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 06_3.5V.txt</span><a href="Comparative%20NIST%20Test%20Results/02_High_Low_Input_Amplitude/06_3.5V.txt" target="_blank" class="text-emerald-600 font-bold hover:underline">View File →</a></li>
+                            </ul>
+                        </div>
                     </div>
+
+                    <div class="border border-dashed border-blue-200 rounded-lg overflow-hidden">
+                        <div class="flex items-center justify-between p-4 bg-white">
+                            <div class="flex items-center gap-3">
+                                <span class="text-2xl">📁</span>
+                                <span class="text-lg text-gray-700 font-bold">03_High/Low Clock Frequency Comparison</span>
+                            </div>
+                            <button onclick="toggleFolder('nist3', this)" class="bg-blue-600 text-white px-5 py-2 rounded-md text-base font-bold hover:bg-blue-700 transition">Open Directory</button>
+                        </div>
+                        <div id="nist3" class="collapsible-content bg-slate-50">
+                            <ul class="p-4 space-y-3 border-t border-blue-100">
+                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 01_1.5MHz.txt</span><a href="Comparative%20NIST%20Test%20Results/03_High_Low_Clock/01_1.5MHz.txt" target="_blank" class="text-blue-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 02_1.75MHz.txt</span><a href="Comparative%20NIST%20Test%20Results/03_High_Low_Clock/02_1.75MHz.txt" target="_blank" class="text-blue-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 03_2.0MHz.txt</span><a href="Comparative%20NIST%20Test%20Results/03_High_Low_Clock/03_2.0MHz.txt" target="_blank" class="text-blue-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 04_2.1MHz.txt</span><a href="Comparative%20NIST%20Test%20Results/03_High_Low_Clock/04_2.1MHz.txt" target="_blank" class="text-blue-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 05_2.2MHz.txt</span><a href="Comparative%20NIST%20Test%20Results/03_High_Low_Clock/05_2.2MHz.txt" target="_blank" class="text-blue-600 font-bold hover:underline">View File →</a></li>
+                                <li class="flex items-center justify-between text-base"><span class="text-gray-700 font-medium">📄 06_2.5MHz.txt</span><a href="Comparative%20NIST%20Test%20Results/03_High_Low_Clock/06_2.5MHz.txt" target="_blank" class="text-blue-600 font-bold hover:underline">View File →</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
