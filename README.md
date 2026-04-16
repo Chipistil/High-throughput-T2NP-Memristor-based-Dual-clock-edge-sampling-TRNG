@@ -1,6 +1,6 @@
 ## README: High-throughput T2NP Memristor-based TRNG
 
-This repository hosts the source code and experimental datasets for our study on a **High-throughput T2NP Memristor-based Dual-clock-edge-sampling TRNG**. This project demonstrates the use of a memristor as a high-speed entropy source for secure true random number generation.
+This repository hosts the source code and experimental datasets for our study on a **High-throughput T2NP Memristor-based Dual-clock-edge-sampling TRNG**. This project demonstrates the use of a memristor as a high-speed entropy source for true random number generator (TRNG).
 
 ---
 
