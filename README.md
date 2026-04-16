@@ -7,9 +7,9 @@ This repository hosts the source code and experimental datasets for our study on
 ## 📂 Repository Structure
 
 ### 1. 📊 Data Conversion
-Algorithms to transform physical memristor responses into digital data:
-* `delay_time_conversion.txt`: Extraction of switching delays.
-* `relaxation_time_conversion.txt`: Processing of filament relaxation times.
+Code to transform memristor responses into digital data:
+* `delay_time_conversion.txt`: Extraction of switching delay times.
+* `relaxation_time_conversion.txt`: Extraction of switching relaxation times.
 * `bitstream_conversion.txt`: Logic for final binary bitstream generation.
 
 ### 2. 🎲 TRNG Verification
