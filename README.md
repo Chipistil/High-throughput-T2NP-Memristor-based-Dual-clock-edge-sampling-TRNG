@@ -13,12 +13,12 @@ Code to transform memristor responses into digital data:
 * `bitstream_conversion.txt`: Logic for final binary bitstream generation.
 
 ### 2. 🎲 TRNG Verification
-Tools to evaluate the quality of generated sequences:
-* **Security**: XOR encryption/decryption tests.
-* **Entropy**: Shannon entropy and heatmap analysis.
+Code to evaluate the quality of the generated sequences:
+* **Ciphering**: XOR encryption/decryption tests.
+* **Shannon Entropy**: Heatmap and Shannon entropy analysis.
 * **Correlation**: Autocorrelation Function (ACF) analysis to ensure unpredictability.
 
-### 3. 🔐 Image Encryption
+### 3. 🔐 Dual-Image Encryption
 Validation of TRNG performance in practical security applications:
 * **Statistical**: Information entropy, histograms, and 3D pixel distribution.
 * **Fidelity**: Quality assessment via MSE, PSNR, and SSIM.
