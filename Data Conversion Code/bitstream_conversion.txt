@@ -1,0 +1,326 @@
+import pandas as pd
+import numpy as np
+import os
+
+# Path settings
+CURRENT_FOLDER = r"G:\Users\Chipistil\Desktop\High-throughput-T2NP-Memristor-based-Dual-clock-edge-sampling-TRNG\Data Conversion"
+
+CSV_FILES = {
+    'c1': 'SDS6104_H10_Pro_CSV_C1_1.csv',
+    'c2': 'SDS6104_H10_Pro_CSV_C2_1.csv',
+    'c3': 'SDS6104_H10_Pro_CSV_C3_1.csv',
+    'c4': 'SDS6104_H10_Pro_CSV_C4_1.csv'
+}
+
+OUTPUT_FILES = {
+    'spike': 'spike_bitstream.txt',
+    'valley': 'valley_bitstream.txt',
+    'alternating': 'alternating_bitstream.txt',
+    'merged_spike': 'merged_spike_bitstream.txt',
+    'merged_valley': 'merged_valley_bitstream.txt',
+    'merged_alternating': 'merged_alternating_bitstream.txt'
+}
+
+def process_csv_files(folder_path):
+    c1_path = os.path.join(folder_path, CSV_FILES['c1'])
+    c2_path = os.path.join(folder_path, CSV_FILES['c2'])
+    c3_path = os.path.join(folder_path, CSV_FILES['c3'])
+    c4_path = os.path.join(folder_path, CSV_FILES['c4'])
+    
+    try:
+        df_c1 = pd.read_csv(c1_path, skiprows=12, header=None, encoding='utf-8')
+        df_c2 = pd.read_csv(c2_path, skiprows=12, header=None, encoding='utf-8')
+        df_c3 = pd.read_csv(c3_path, skiprows=12, header=None, encoding='utf-8')
+        df_c4 = pd.read_csv(c4_path, skiprows=12, header=None, encoding='utf-8')
+    except UnicodeDecodeError:
+        try:
+            df_c1 = pd.read_csv(c1_path, skiprows=12, header=None, encoding='gbk')
+            df_c2 = pd.read_csv(c2_path, skiprows=12, header=None, encoding='gbk')
+            df_c3 = pd.read_csv(c3_path, skiprows=12, header=None, encoding='gbk')
+            df_c4 = pd.read_csv(c4_path, skiprows=12, header=None, encoding='gbk')
+        except UnicodeDecodeError:
+            df_c1 = pd.read_csv(c1_path, skiprows=12, header=None, encoding='latin-1')
+            df_c2 = pd.read_csv(c2_path, skiprows=12, header=None, encoding='latin-1')
+            df_c3 = pd.read_csv(c3_path, skiprows=12, header=None, encoding='latin-1')
+            df_c4 = pd.read_csv(c4_path, skiprows=12, header=None, encoding='latin-1')
+    
+    c1_col1 = df_c1[0].values
+    c1_col2 = df_c1[1].values
+    c2_col1 = df_c2[0].values
+    c2_col2 = df_c2[1].values
+    c3_col1 = df_c3[0].values
+    c3_col2 = df_c3[1].values
+    c4_col1 = df_c4[0].values
+    c4_col2 = df_c4[1].values
+    
+    c1_col2_abs = np.abs(c1_col2)
+    c2_col2_abs = np.abs(c2_col2)
+    c3_col2_abs = np.abs(c3_col2)
+    c4_col2_abs = np.abs(c4_col2)
+    
+    spike_bitstream = []
+    valley_bitstream = []
+    
+    n = len(c2_col2_abs)
+    i = 0
+    
+    while i < n:
+        if c2_col1[i] > 0.04 and c1_col2_abs[i] < 1:
+            break
+            
+        if c2_col2_abs[i] > 1.75:
+            start_idx = i + 1
+            j = start_idx
+            count_below = 0
+            end_idx = -1
+            
+            while j < n:
+                if c2_col1[j] > 0.04 and c1_col2_abs[j] < 1:
+                    end_idx = -1
+                    break
+                    
+                if c2_col2_abs[j] < 1.75:
+                    count_below += 1
+                else:
+                    count_below = 0
+                
+                if count_below >= 8:
+                    end_idx = j - 7
+                    break
+                j += 1
+            
+            if end_idx != -1 and start_idx <= end_idx:
+                middle_idx = start_idx + (end_idx - start_idx) // 2
+                if middle_idx < len(c3_col2_abs):
+                    if c3_col2_abs[middle_idx] > 1.75:
+                        spike_bitstream.append('1')
+                    else:
+                        spike_bitstream.append('0')
+                i = j
+            else:
+                i += 1
+        else:
+            i += 1
+    
+    i = 0
+    while i < n:
+        if c2_col1[i] > 0.04 and c1_col2_abs[i] < 1:
+            break
+            
+        if c2_col2_abs[i] < 1.75:
+            start_idx = i + 1
+            j = start_idx
+            count_above = 0
+            end_idx = -1
+            
+            while j < n:
+                if c2_col1[j] > 0.04 and c1_col2_abs[j] < 1:
+                    end_idx = -1
+                    break
+                    
+                if c2_col2_abs[j] > 1.75:
+                    count_above += 1
+                else:
+                    count_above = 0
+                
+                if count_above >= 8:
+                    end_idx = j - 7
+                    break
+                j += 1
+            
+            if end_idx != -1 and start_idx <= end_idx:
+                middle_idx = start_idx + (end_idx - start_idx) // 2
+                if middle_idx < len(c4_col2_abs):
+                    if c4_col2_abs[middle_idx] > 1.75:
+                        valley_bitstream.append('1') 
+                    else:
+                        valley_bitstream.append('0')
+                i = j
+            else:
+                i += 1
+        else:
+            i += 1
+    
+    alternating_bitstream = []
+    max_len = max(len(spike_bitstream), len(valley_bitstream))
+    for i in range(max_len):
+        if i < len(spike_bitstream):
+            alternating_bitstream.append(spike_bitstream[i])
+        if i < len(valley_bitstream):
+            alternating_bitstream.append(valley_bitstream[i])
+    
+    spike_str = ''.join(spike_bitstream)
+    valley_str = ''.join(valley_bitstream)
+    alternating_str = ''.join(alternating_bitstream)
+    
+    spike_file = os.path.join(folder_path, OUTPUT_FILES['spike'])
+    valley_file = os.path.join(folder_path, OUTPUT_FILES['valley'])
+    alternating_file = os.path.join(folder_path, OUTPUT_FILES['alternating'])
+    
+    with open(spike_file, 'w') as f:
+        f.write(spike_str)
+    
+    with open(valley_file, 'w') as f:
+        f.write(valley_str)
+    
+    with open(alternating_file, 'w') as f:
+        f.write(alternating_str)
+    
+    return spike_str, valley_str, alternating_str
+
+def merge_bitstreams(root_folder):
+    merged_spike = ''
+    merged_valley = ''
+    merged_alternating = ''
+    
+    max_folders = 500
+    processed_count = 0
+    
+    for i in range(1, max_folders + 1):
+        folder_name = f"NewFolder{i:02d}"
+        folder_path = os.path.join(root_folder, folder_name)
+        
+        if not os.path.exists(folder_path):
+            continue
+        
+        spike_file = os.path.join(folder_path, OUTPUT_FILES['spike'])
+        valley_file = os.path.join(folder_path, OUTPUT_FILES['valley'])
+        alternating_file = os.path.join(folder_path, OUTPUT_FILES['alternating'])
+        
+        if os.path.exists(spike_file):
+            try:
+                with open(spike_file, 'r') as f:
+                    spike_content = f.read().strip()
+                    if spike_content:
+                        merged_spike += spike_content
+                        processed_count += 1
+                        print(f"Processed {folder_name} spike bitstream")
+            except Exception as e:
+                print(f"Error reading {spike_file}: {e}")
+        
+        if os.path.exists(valley_file):
+            try:
+                with open(valley_file, 'r') as f:
+                    valley_content = f.read().strip()
+                    if valley_content:
+                        merged_valley += valley_content
+            except Exception as e:
+                print(f"Error reading {valley_file}: {e}")
+        
+        if os.path.exists(alternating_file):
+            try:
+                with open(alternating_file, 'r') as f:
+                    alternating_content = f.read().strip()
+                    if alternating_content:
+                        merged_alternating += alternating_content
+            except Exception as e:
+                print(f"Error reading {alternating_file}: {e}")
+    
+    if processed_count > 0:
+        spike_output = os.path.join(root_folder, OUTPUT_FILES['merged_spike'])
+        valley_output = os.path.join(root_folder, OUTPUT_FILES['merged_valley'])
+        alternating_output = os.path.join(root_folder, OUTPUT_FILES['merged_alternating'])
+        
+        try:
+            with open(spike_output, 'w') as f:
+                f.write(merged_spike)
+            
+            with open(valley_output, 'w') as f:
+                f.write(merged_valley)
+            
+            with open(alternating_output, 'w') as f:
+                f.write(merged_alternating)
+            
+            print(f"\nMerging completed!")
+            print(f"Total folders processed: {processed_count}")
+            print(f"Merged spike bitstream length: {len(merged_spike)}")
+            print(f"Merged valley bitstream length: {len(merged_valley)}")
+            print(f"Merged alternating bitstream length: {len(merged_alternating)}")
+            print(f"Merged files saved to:")
+            print(f"- Spike bitstream: {spike_output}")
+            print(f"- Valley bitstream: {valley_output}")
+            print(f"- Alternating bitstream: {alternating_output}")
+            
+        except Exception as e:
+            print(f"Error saving merged files: {e}")
+    else:
+        print("No valid bitstream files found for merging")
+
+def process_all_folders(root_folder):
+    processed_count = 0
+    failed_count = 0
+    failed_folders = []
+    
+    for folder_name in os.listdir(root_folder):
+        folder_path = os.path.join(root_folder, folder_name)
+        if os.path.isdir(folder_path):
+            print(f"\nProcessing folder: {folder_name}")
+            
+            required_files = list(CSV_FILES.values())
+            
+            missing_files = []
+            for file in required_files:
+                if not os.path.exists(os.path.join(folder_path, file)):
+                    missing_files.append(file)
+            
+            if missing_files:
+                print(f"  Skipped: Missing required files: {', '.join(missing_files)}")
+                failed_count += 1
+                failed_folders.append((folder_name, "Missing required files"))
+            else:
+                try:
+                    spike_str, valley_str, alternating_str = process_csv_files(folder_path)
+                    print(f"  Success: Spike bitstream length={len(spike_str)}, Valley bitstream length={len(valley_str)}, Alternating bitstream length={len(alternating_str)}")
+                    processed_count += 1
+                except Exception as e:
+                    print(f"  Failed: Error during processing - {str(e)}")
+                    failed_count += 1
+                    failed_folders.append((folder_name, str(e)))
+    
+    print(f"\nProcessing completed!")
+    print(f"Total folders processed: {processed_count}")
+    print(f"Failed folders: {failed_count}")
+    
+    if failed_folders:
+        print(f"\nFailed folders:")
+        for folder_name, error in failed_folders:
+            print(f"  - {folder_name}: {error}")
+
+if __name__ == "__main__":
+    print("Welcome to the pulse reading random bitstream tool")
+    print("=" * 50)
+    
+    current_folder = CURRENT_FOLDER
+    print(f"Current folder: {current_folder}")
+    
+    required_files = list(CSV_FILES.values())
+    
+    missing_files = []
+    for file in required_files:
+        if not os.path.exists(os.path.join(current_folder, file)):
+            missing_files.append(file)
+    
+    if missing_files:
+        print("Error: Missing required files in current folder:")
+        for file in missing_files:
+            print(f"  - {file}")
+    else:
+        try:
+            spike_str, valley_str, alternating_str = process_csv_files(current_folder)
+            
+            print("\nProcessing completed!")
+            print(f"Spike group bitstream length: {len(spike_str)}")
+            print(f"Spike group bitstream: {spike_str}")
+            print(f"\nValley group bitstream length: {len(valley_str)}")
+            print(f"Valley group bitstream: {valley_str}")
+            print(f"\nAlternating bitstream length: {len(alternating_str)}")
+            print(f"Alternating bitstream: {alternating_str}")
+            
+            print(f"\nBitstream files saved to:")
+            print(f"- Spike group: {os.path.join(current_folder, OUTPUT_FILES['spike'])}")
+            print(f"- Valley group: {os.path.join(current_folder, OUTPUT_FILES['valley'])}")
+            print(f"- Alternating bitstream: {os.path.join(current_folder, OUTPUT_FILES['alternating'])}")
+        except Exception as e:
+            print(f"Error during processing: {e}")
+    
+    print("\nProgram execution completed!")
