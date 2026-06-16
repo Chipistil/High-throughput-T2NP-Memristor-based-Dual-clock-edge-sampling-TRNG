@@ -25,7 +25,11 @@ def generate_3d_pixel_distribution(image_path, output_image_path, output_data_pa
         
         height, width, channels = img_array.shape
         
-        if channels != 3:
+        if channels == 4:
+            img_array = img_array[:, :, :3]
+            channels = 3
+            print("Converted RGBA to RGB by removing Alpha channel")
+        elif channels != 3:
             print(f"Error: Image is not in RGB format, number of channels: {channels}")
             return False
         
@@ -95,7 +99,11 @@ def generate_single_channel_histogram(image_path, channel, output_image_path, ou
         
         height, width, channels = img_array.shape
         
-        if channels != 3:
+        if channels == 4:
+            img_array = img_array[:, :, :3]
+            channels = 3
+            print("Converted RGBA to RGB by removing Alpha channel")
+        elif channels != 3:
             print(f"Error: Image is not in RGB format, number of channels: {channels}")
             return False
         
